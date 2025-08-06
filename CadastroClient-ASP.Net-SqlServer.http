@@ -1,0 +1,6 @@
+@CadastroClient_ASP.Net_SqlServer_HostAddress = http://localhost:5213
+
+GET {{CadastroClient_ASP.Net_SqlServer_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
