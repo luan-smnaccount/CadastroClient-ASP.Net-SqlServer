@@ -24,6 +24,7 @@ bld/
 [Ll]ogs/
 *.sln
 .env
+Migrations
 
 # .NET Core
 project.lock.json
