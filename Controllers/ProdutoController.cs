@@ -23,15 +23,15 @@ namespace CadastroClient_ASP.Net_SqlServer.Controllers
         {
             try
             {
-                var produtos = await _produtoServices.GetUserAsync();
-                return Ok(produtos);
+                var user = await _produtoServices.GetUserAsync();
+                return Ok(user);
             }
             catch (Exception ex)
             {
                 return BadRequest(ex.Message);
             }
         }
-
+        
         [HttpGet("{idUser}")]
         public async Task<ActionResult<ProdutoModel>> GetUserById([FromRoute] int idUser)
         {
@@ -39,6 +39,27 @@ namespace CadastroClient_ASP.Net_SqlServer.Controllers
             {
                 var user = await _produtoServices.GetByIdAsync(idUser);
                 return Ok(user);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+
+        [HttpPost]
+        public async Task<ActionResult<ProdutoModel>> PostUser([FromBody] ProdutoModel user)
+        {
+            var usuario = new ProdutoModel
+            {
+                Nome = user.Nome,
+                Email = user.Email,
+                Senha = user.Senha,
+                DataNascimento = user.DataNascimento
+            };
+
+            try
+            {
+                return Ok(_produtoServices.CreateUserAsync(usuario));
             }
             catch (Exception ex)
             {
