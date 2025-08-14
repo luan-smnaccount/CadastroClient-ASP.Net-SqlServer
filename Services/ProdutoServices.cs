@@ -19,5 +19,18 @@ namespace CadastroClient_ASP.Net_SqlServer.Services
         {
             return await _context.Produto.ToListAsync();
         }
+
+        public async Task<ProdutoModel> GetByIdAsync(int idUser)
+        {
+            var usuario = await _context.Produto.FindAsync(idUser);
+            if (usuario == null)
+            {
+                Console.WriteLine("Uusário não cadastrado!");
+                Thread.Sleep(1000);
+                return null;
+            }
+
+            return usuario;
+        }
     }
 }
