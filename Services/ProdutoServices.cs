@@ -32,5 +32,13 @@ namespace CadastroClient_ASP.Net_SqlServer.Services
 
             return usuario;
         }
+
+        public async Task<ProdutoModel> CreateUserAsync(ProdutoModel user)
+        {
+            await _context.AddAsync(user);
+            await _context.SaveChangesAsync();
+
+            return user;
+        }
     }
 }
