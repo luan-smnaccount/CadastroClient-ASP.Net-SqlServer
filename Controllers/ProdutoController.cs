@@ -33,19 +33,20 @@ namespace CadastroClient_ASP.Net_SqlServer.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult<ProdutoModel>> PostUser([FromBody] ProdutoModel user)
+        public async Task<ActionResult<ProdutoModel>> PostUser([FromBody] ProdutoModel infoUser)
         {
             var usuario = new ProdutoModel
             {
-                Nome = user.Nome,
-                Email = user.Email,
-                Senha = user.Senha,
-                DataNascimento = user.DataNascimento
+                Nome = infoUser.Nome,
+                Email = infoUser.Email,
+                Senha = infoUser.Senha,
+                DataNascimento = infoUser.DataNascimento
             };
 
             try
             {
-                return Ok(_produtoServices.CreateUserAsync(usuario));
+                var user = await _produtoServices.CreateUserAsync(usuario);
+                return Ok(user);
             }
             catch (Exception ex)
             {
