@@ -31,7 +31,7 @@ namespace CadastroClient_ASP.Net_SqlServer.Controllers
                 return BadRequest(ex.Message);
             }
         }
-        
+
         [HttpGet("{idUser}")]
         public async Task<ActionResult<ProdutoModel>> GetUserById([FromRoute] int idUser)
         {
@@ -61,6 +61,20 @@ namespace CadastroClient_ASP.Net_SqlServer.Controllers
             {
                 var user = await _produtoServices.CreateUserAsync(usuario);
                 return Ok(user);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+
+        [HttpDelete("{idUser}")]
+        public async Task<ActionResult<string>> DeleteUser([FromRoute] int idUser)
+        {
+            try
+            {
+                var mensgRetorno = await _produtoServices.DeleteUserAsync(idUser);
+                return Ok(mensgRetorno);
             }
             catch (Exception ex)
             {
