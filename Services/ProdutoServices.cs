@@ -40,5 +40,19 @@ namespace CadastroClient_ASP.Net_SqlServer.Services
 
             return user;
         }
+
+        public async Task<string> DeleteUserAsync(int idUser)
+        {
+            var usuarioIdentificado = await _context.Produto.FindAsync(idUser);
+            if (usuarioIdentificado == null)
+            {
+                return "Usuário não cadastrado!";
+            }
+
+            _context.Produto.Remove(usuarioIdentificado);
+            await _context.SaveChangesAsync();
+
+            return "Usuário removido com sucesso!";
+        }
     }
 }
