@@ -1,5 +1,6 @@
 using CadastroClient_ASP.Net_SqlServer.Models;
 using CadastroClient_ASP.Net_SqlServer.Services;
+using DTO;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
@@ -74,6 +75,20 @@ namespace CadastroClient_ASP.Net_SqlServer.Controllers
             try
             {
                 var mensgRetorno = await _produtoServices.DeleteUserAsync(idUser);
+                return Ok(mensgRetorno);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+
+        [HttpPut("{idUser}")]
+        public async Task<ActionResult<string>> PutUser([FromRoute] int idUser, [FromBody] UserUpdateDTO userUpdate)
+        {
+            try
+            {
+                var mensgRetorno = await _produtoServices.UpdateUserAsync(idUser, userUpdate);
                 return Ok(mensgRetorno);
             }
             catch (Exception ex)

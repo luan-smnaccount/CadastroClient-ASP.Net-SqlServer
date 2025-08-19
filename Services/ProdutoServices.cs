@@ -1,5 +1,6 @@
 using CadastroClient_ASP.Net_SqlServer.Data;
 using CadastroClient_ASP.Net_SqlServer.Models;
+using DTO;
 using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -32,7 +33,7 @@ namespace CadastroClient_ASP.Net_SqlServer.Services
 
             return usuario;
         }
-        
+
         public async Task<ProdutoModel> CreateUserAsync(ProdutoModel user)
         {
             await _context.AddAsync(user);
@@ -53,6 +54,25 @@ namespace CadastroClient_ASP.Net_SqlServer.Services
             await _context.SaveChangesAsync();
 
             return "Usuário removido com sucesso!";
+        }
+
+        public async Task<string> UpdateUserAsync(int idUser, UserUpdateDTO userUpdate)
+        {
+            var usuarioIdentificado = await _context.Produto.FindAsync(idUser);
+            if (usuarioIdentificado == null)
+            {
+                return "Usuário não cadastrado!";
+            }
+
+            usuarioIdentificado.Nome = userUpdate.NovoNome ?? usuarioIdentificado.Nome;
+            usuarioIdentificado.Email = userUpdate.NovoEmail ?? usuarioIdentificado.Email;
+            usuarioIdentificado.Senha = userUpdate.NovaSenha ?? usuarioIdentificado.Senha;
+            usuarioIdentificado.DataNascimento = userUpdate.NovaDataNascimento ?? usuarioIdentificado.DataNascimento;
+
+            _context.Produto.Update(usuarioIdentificado);
+            await _context.SaveChangesAsync();
+
+            return "Usuário atualizado com sucesso!";
         }
     }
 }
