@@ -20,7 +20,7 @@ namespace CadastroClient_ASP.Net_SqlServer.Controllers
         }
 
         [HttpGet]
-        public async Task<ActionResult<List<ProdutoModel>>> GetUser()
+        public async Task<ActionResult<List<ProdutoModel>>> GetUser() // Adicionar uma mensg de retorno caso não existam usuários cadastrados
         {
             try
             {
@@ -34,7 +34,7 @@ namespace CadastroClient_ASP.Net_SqlServer.Controllers
         }
 
         [HttpGet("{idUser}")]
-        public async Task<ActionResult<ProdutoModel>> GetUserById([FromRoute] int idUser)
+        public async Task<ActionResult<ProdutoModel>> GetUserById([FromRoute] int idUser) // Adicionar uma mensagem de retorno caso não exista usuário com o ID
         {
             try
             {
@@ -48,7 +48,7 @@ namespace CadastroClient_ASP.Net_SqlServer.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult<ProdutoModel>> PostUser([FromBody] ProdutoModel infoUser)
+        public async Task<ActionResult<ProdutoModel>> PostUser([FromBody] ProdutoModel infoUser) // Criar middleware para validar as entradas e mudar para uma mensagem de retorno
         {
             var usuario = new ProdutoModel
             {
@@ -70,7 +70,7 @@ namespace CadastroClient_ASP.Net_SqlServer.Controllers
         }
 
         [HttpDelete("{idUser}")]
-        public async Task<ActionResult<string>> DeleteUser([FromRoute] int idUser)
+        public async Task<ActionResult<string>> DeleteUser([FromRoute] int idUser) // Mudar para que o ID seja resetado ao remover um usuário
         {
             try
             {
@@ -84,7 +84,7 @@ namespace CadastroClient_ASP.Net_SqlServer.Controllers
         }
 
         [HttpPut("{idUser}")]
-        public async Task<ActionResult<string>> PutUser([FromRoute] int idUser, [FromBody] UserUpdateDTO userUpdate)
+        public async Task<ActionResult<string>> PutUser([FromRoute] int idUser, [FromBody] UserUpdateDTO userUpdate) // Garantir que caso o valor informado seja nulo, o sistema mantenha cadastrado o mesmo
         {
             try
             {
