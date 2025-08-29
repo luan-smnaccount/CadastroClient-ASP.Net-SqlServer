@@ -20,7 +20,7 @@ namespace CadastroClient_ASP.Net_SqlServer.Controllers
         }
 
         [HttpGet]
-        public async Task<ActionResult<List<ProdutoModel>>> GetUser() // Adicionar uma mensg de retorno caso não existam usuários cadastrados
+        public async Task<ActionResult<List<ProdutoModel>>> GetUser()
         {
             try
             {
@@ -40,7 +40,7 @@ namespace CadastroClient_ASP.Net_SqlServer.Controllers
         }
 
         [HttpGet("{idUser}")]
-        public async Task<ActionResult<ProdutoModel>> GetUserById([FromRoute] int idUser) // Adicionar uma mensagem de retorno caso não exista usuário com o ID
+        public async Task<ActionResult<ProdutoModel>> GetUserById([FromRoute] int idUser)
         {
             try
             {
