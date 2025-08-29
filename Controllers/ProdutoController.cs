@@ -25,7 +25,7 @@ namespace CadastroClient_ASP.Net_SqlServer.Controllers
             {
                 var produtos = await _produtoServices.GetUserAsync();
 
-                if (produtos == null)
+                if (produtos.Count < 1)
                 {
                     return NotFound("Sem usuários cadastrados.");
                 }
