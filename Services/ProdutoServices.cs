@@ -26,8 +26,6 @@ namespace CadastroClient_ASP.Net_SqlServer.Services
             var usuario = await _context.Produto.FindAsync(idUser);
             if (usuario == null)
             {
-                Console.WriteLine("Usuário não cadastrado!");
-                Thread.Sleep(1000);
                 return null;
             }
 
