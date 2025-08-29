@@ -38,6 +38,12 @@ namespace CadastroClient_ASP.Net_SqlServer.Controllers
             try
             {
                 var user = await _produtoServices.GetByIdAsync(idUser);
+
+                if (user == null)
+                {
+                    return NotFound($"Usuário com ID {idUser} não cadastrado.");
+                }
+                
                 return Ok(user);
             }
             catch (Exception ex)
