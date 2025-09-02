@@ -111,7 +111,7 @@ namespace CadastroClient_ASP.Net_SqlServer.Controllers
         }
 
         [HttpPut("{idUser}")]
-        public async Task<ActionResult<string>> PutUser([FromRoute] int idUser, [FromBody] UserUpdateDTO userUpdate) // Garantir que caso o valor informado seja nulo, o sistema mantenha cadastrado o mesmo
+        public async Task<ActionResult<string>> PutUser([FromRoute] int idUser, [FromBody] UserUpdateDTO userUpdate)
         {
             try
             {
