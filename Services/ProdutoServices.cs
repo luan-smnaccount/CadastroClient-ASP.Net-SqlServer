@@ -53,6 +53,7 @@ namespace CadastroClient_ASP.Net_SqlServer.Services
             _context.Produto.Remove(usuarioIdentificado);
             await _context.SaveChangesAsync();
 
+            await _context.Database.ExecuteSqlRawAsync("DBCC CHECKIDENT ('Produto', RESEED, 0)");
             return "Usuário removido com sucesso!";
         }
 
