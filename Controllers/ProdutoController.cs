@@ -75,11 +75,28 @@ namespace CadastroClient_ASP.Net_SqlServer.Controllers
             try
             {
                 var mensgRetorno = await _produtoServices.UpdateUserAsync(idUser, userUpdate);
-                return Ok(mensgRetorno);
+                if (!mensgRetorno)
+                {
+                    return StatusCode(404, new
+                    {
+                        Sucesso = false,
+                        Mensagem = $"Usuário com id {idUser} não encontrado."
+                    });
+                }
+
+                return StatusCode(200, new
+                {
+                    Sucesso = true,
+                    Mensagem = "Usuário atualizado com sucesso."
+                });
             }
             catch (Exception ex)
             {
-                return BadRequest(ex.Message);
+                return StatusCode(400, new
+                {
+                    Sucesso = false,
+                    Menssagem = ex.Message
+                });
             }
         }
     }
