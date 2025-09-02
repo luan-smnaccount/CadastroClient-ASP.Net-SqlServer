@@ -55,12 +55,12 @@ namespace CadastroClient_ASP.Net_SqlServer.Services
             return true;
         }
 
-        public async Task<string> UpdateUserAsync(int idUser, UserUpdateDTO userUpdate)
+        public async Task<bool> UpdateUserAsync(int idUser, UserUpdateDTO userUpdate)
         {
             var usuarioIdentificado = await _context.Produto.FindAsync(idUser);
             if (usuarioIdentificado == null)
             {
-                return "Usuário não cadastrado!";
+                return false;
             }
 
             usuarioIdentificado.Nome = userUpdate.NovoNome ?? usuarioIdentificado.Nome;
@@ -71,7 +71,7 @@ namespace CadastroClient_ASP.Net_SqlServer.Services
             _context.Produto.Update(usuarioIdentificado);
             await _context.SaveChangesAsync();
 
-            return "Usuário atualizado com sucesso!";
+            return true;
         }
     }
 }
