@@ -57,14 +57,26 @@ namespace CadastroClient_ASP.Net_SqlServer.Controllers
 
                 if (user == null)
                 {
-                    return NotFound($"Usuário com ID {idUser} não cadastrado.");
+                    return StatusCode(404, new
+                    {
+                        Sucesso = false,
+                        Menssagem = $"Usuário com id {idUser} não encontrado"
+                    });
                 }
-                
-                return Ok(user);
+
+                return StatusCode(200, new
+                {
+                    Sucesso = true,
+                    Usuario = user
+                });
             }
             catch (Exception ex)
             {
-                return BadRequest(ex.Message);
+                return StatusCode(400, new
+                {
+                    Sucesso = false,
+                    Menssagem =  ex.Message
+                });
             }
         }
 
