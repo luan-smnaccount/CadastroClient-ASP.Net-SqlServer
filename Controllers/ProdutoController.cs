@@ -1,9 +1,6 @@
 using CadastroClient_ASP.Net_SqlServer.Models;
 using CadastroClient_ASP.Net_SqlServer.Services;
 using Microsoft.AspNetCore.Mvc;
-using System;
-using System.Collections.Generic;
-using System.Threading.Tasks;
 
 namespace CadastroClient_ASP.Net_SqlServer.Controllers
 {
@@ -33,24 +30,42 @@ namespace CadastroClient_ASP.Net_SqlServer.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult<ProdutoModel>> PostUser([FromBody] ProdutoModel infoUser)
+        public async Task<ActionResult<string>> PostUser([FromBody] ProdutoModel infoUser)
         {
-            var usuario = new ProdutoModel
+            var camposVazios = new List<string>();
+
+            if (string.IsNullOrWhiteSpace(infoUser.Nome)) camposVazios.Add("Nome");
+            if (string.IsNullOrWhiteSpace(infoUser.Email)) camposVazios.Add("Email");
+            if (string.IsNullOrWhiteSpace(infoUser.Senha)) camposVazios.Add("Senha");
+            if (string.IsNullOrWhiteSpace(infoUser.DataNascimento)) camposVazios.Add("DataNascimento");
+
+            if (camposVazios.Any())
             {
-                Nome = infoUser.Nome,
-                Email = infoUser.Email,
-                Senha = infoUser.Senha,
-                DataNascimento = infoUser.DataNascimento
-            };
+                return StatusCode(400, new
+                {
+                    Sucesso = false,
+                    Mensagem = "Os seguintes campos estão em branco:",
+                    Campos = camposVazios
+                });
+            }
 
             try
             {
-                var user = await _produtoServices.CreateUserAsync(usuario);
-                return Ok(user);
+                await _produtoServices.CreateUserAsync(infoUser);
+                return StatusCode(200, new
+                {
+                    Sucesso = true,
+                    Messagem = "Usuário cadastrado com sucesso."
+                });
             }
             catch (Exception ex)
             {
-                return BadRequest(ex.Message);
+                return StatusCode(500, new
+                {
+                    Sucesso = false,
+                    Mensagem = "Erro interno ao cadastrar usuário.",
+                    Detalhes = ex.Message
+                });
             }
         }
     }
