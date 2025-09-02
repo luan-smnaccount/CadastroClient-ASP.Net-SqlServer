@@ -42,7 +42,11 @@ namespace CadastroClient_ASP.Net_SqlServer.Controllers
             }
             catch (Exception ex)
             {
-                return BadRequest(ex.Message);
+                return StatusCode(400, new
+                {
+                    Sucesso = false,
+                    Menssagem = ex.Message
+                });
             }
         }
     }
