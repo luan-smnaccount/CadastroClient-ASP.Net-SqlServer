@@ -25,14 +25,26 @@ namespace CadastroClient_ASP.Net_SqlServer.Controllers
 
                 if (produtos.Count < 1)
                 {
-                    return NotFound("Sem usuários cadastrados.");
+                    return StatusCode(404, new
+                    {
+                        Sucesso = false,
+                        Mensagem = "Banco de dados sem usuários cadastrados"
+                    });
                 }
-                
-                return Ok(produtos);
+
+                return StatusCode(200, new
+                {
+                    Sucesso = true,
+                    Usuarios = produtos
+                });
             }
             catch (Exception ex)
             {
-                return BadRequest(ex.Message);
+                return StatusCode(400, new
+                {
+                    Sucesso = false,
+                    Menssagem = ex.Message
+                });
             }
         }
 
