@@ -40,19 +40,19 @@ namespace CadastroClient_ASP.Net_SqlServer.Services
             return user;
         }
 
-        public async Task<string> DeleteUserAsync(int idUser)
+        public async Task<bool> DeleteUserAsync(int idUser)
         {
             var usuarioIdentificado = await _context.Produto.FindAsync(idUser);
             if (usuarioIdentificado == null)
             {
-                return "Usuário não cadastrado!";
+                return false;
             }
 
             _context.Produto.Remove(usuarioIdentificado);
             await _context.SaveChangesAsync();
 
             await _context.Database.ExecuteSqlRawAsync("DBCC CHECKIDENT ('Produto', RESEED, 0)");
-            return "Usuário removido com sucesso!";
+            return true;
         }
 
         public async Task<string> UpdateUserAsync(int idUser, UserUpdateDTO userUpdate)
